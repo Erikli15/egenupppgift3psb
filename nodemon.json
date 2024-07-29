@@ -1,0 +1,6 @@
+{
+    "watch": ["api"],
+    "ext": ".js",
+    "ignore": [],
+    "exec": "npx node ./api/index.js"
+  }
