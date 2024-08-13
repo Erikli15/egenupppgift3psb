@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsc",
     "start": "node ./api/index.js",
     "dev": "npx nodemon"
   },

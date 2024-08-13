@@ -17,7 +17,7 @@ const app = express();
 const stripe = require("stripe");
 
 const StripeKey = process.env.SK_TEST;
-const stripe = new stripe(StripeKey);
+const stripeconection = new stripe(StripeKey);
 
 app.use(express.static("public"));
 app.use(express.json());
