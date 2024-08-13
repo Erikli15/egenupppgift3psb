@@ -1,5 +1,5 @@
 const { pool } = require("./db.js");
-// const connection = pool.getConnection(pool);
+const connection = pool.getConnection(pool);
 class Product {
   id;
   productName;
