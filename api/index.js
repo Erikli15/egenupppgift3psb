@@ -56,107 +56,107 @@ app.use(bodyParser.json());
 //   });
 // });
 
-// app.get("/products", async (req, res) => {
-//   let products = await findAll();
-//   res.json(products);
-// });
+app.get("/products", async (req, res) => {
+  let products = await findAll();
+  res.json(products);
+});
 
-// app.get("/:id", async (req, res) => {
-//   let products = await findAll();
-//   if (!products) {
-//     res.status(404).json({ message: "No products found" });
-//     return;
-//   }
-//   const productId = parseInt(req.params.id);
-//   const product = products.find(
-//     (product) => product.id === parseInt(productId)
-//   );
-//   if (!product) {
-//     res.status(404).json({ message: "Product not found" });
-//   } else {
-//     console.log(product.id);
-//     res.json(product);
-//   }
-// });
+app.get("/:id", async (req, res) => {
+  let products = await findAll();
+  if (!products) {
+    res.status(404).json({ message: "No products found" });
+    return;
+  }
+  const productId = parseInt(req.params.id);
+  const product = products.find(
+    (product) => product.id === parseInt(productId)
+  );
+  if (!product) {
+    res.status(404).json({ message: "Product not found" });
+  } else {
+    console.log(product.id);
+    res.json(product);
+  }
+});
 
-// app.post("/", async (req, res) => {
-//   const { productName, price, categoryName, description, imgUrl } = req.body;
-//   console.log(req.body);
-//   if (
-//     !productName ||
-//     isNaN(price) ||
-//     !categoryName ||
-//     description === undefined ||
-//     imgUrl === undefined
-//   ) {
-//     res.status(400).json({
-//       message: "All parameters are required",
-//     });
-//     return;
-//   }
-//   try {
-//     console.log("Calling addProduct with:", [
-//       productName,
-//       price,
-//       categoryName,
-//       description,
-//       imgUrl,
-//     ]);
+app.post("/", async (req, res) => {
+  const { productName, price, categoryName, description, imgUrl } = req.body;
+  console.log(req.body);
+  if (
+    !productName ||
+    isNaN(price) ||
+    !categoryName ||
+    description === undefined ||
+    imgUrl === undefined
+  ) {
+    res.status(400).json({
+      message: "All parameters are required",
+    });
+    return;
+  }
+  try {
+    console.log("Calling addProduct with:", [
+      productName,
+      price,
+      categoryName,
+      description,
+      imgUrl,
+    ]);
 
-//     await addProduct(productName, price, categoryName, description, imgUrl);
-//     const message = "Product added successfully!";
-//     res.json({ message: message });
-//   } catch (error) {
-//     console.error(`Error adding product: ${error.message}`);
-//     res.status(500).json({ message: "Error adding product" });
-//   }
-// });
+    await addProduct(productName, price, categoryName, description, imgUrl);
+    const message = "Product added successfully!";
+    res.json({ message: message });
+  } catch (error) {
+    console.error(`Error adding product: ${error.message}`);
+    res.status(500).json({ message: "Error adding product" });
+  }
+});
 
-// app.put("/:id", async (req, res) => {
-//   const productId = req.params.id;
-//   const updatedProductData = req.body;
-//   const requiredProperties = [
-//     "productName",
-//     "price",
-//     "categoryName",
-//     "description",
-//     "imgUrl",
-//   ];
+app.put("/:id", async (req, res) => {
+  const productId = req.params.id;
+  const updatedProductData = req.body;
+  const requiredProperties = [
+    "productName",
+    "price",
+    "categoryName",
+    "description",
+    "imgUrl",
+  ];
 
-//   for (const property of requiredProperties) {
-//     if (
-//       !updatedProductData[property] &&
-//       updatedProductData[property] !== null
-//     ) {
-//       res.status(400).json({ error: `Property '${property}' is required` });
-//       return;
-//     }
-//   }
+  for (const property of requiredProperties) {
+    if (
+      !updatedProductData[property] &&
+      updatedProductData[property] !== null
+    ) {
+      res.status(400).json({ error: `Property '${property}' is required` });
+      return;
+    }
+  }
 
-//   try {
-//     await updateProduct(
-//       productId,
-//       updatedProductData.productName,
-//       updatedProductData.price,
-//       updatedProductData.categoryName,
-//       updatedProductData.description,
-//       updatedProductData.imgUrl
-//     );
-//     console.log(`Product ${productId} updated successfully`);
-//     console.log(updatedProductData);
-//     res.send(updatedProductData);
-//   } catch (error) {
-//     console.error("Error:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
+  try {
+    await updateProduct(
+      productId,
+      updatedProductData.productName,
+      updatedProductData.price,
+      updatedProductData.categoryName,
+      updatedProductData.description,
+      updatedProductData.imgUrl
+    );
+    console.log(`Product ${productId} updated successfully`);
+    console.log(updatedProductData);
+    res.send(updatedProductData);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
-// app.delete("/:id", async (req, res) => {
-//   const productId = req.params.id;
-//   const result = await deleteProduct(productId);
-//   console.log(`Deleted product ${productId}: ${JSON.stringify(result)}`);
-//   res.sendStatus(204);
-// });
+app.delete("/:id", async (req, res) => {
+  const productId = req.params.id;
+  const result = await deleteProduct(productId);
+  console.log(`Deleted product ${productId}: ${JSON.stringify(result)}`);
+  res.sendStatus(204);
+});
 
 app.listen(port, async () => {
   await createTableIfNotExists();
