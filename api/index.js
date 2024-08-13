@@ -4,14 +4,14 @@ const dotenv = require("dotenv");
 const fs = require("fs");
 const bodyParser = require("body-parser");
 const path = require("path");
-// const {
-//   createTableIfNotExists,
-//   seedProducts,
-//   findAll,
-//   addProduct,
-//   updateProduct,
-//   deleteProduct,
-// } = require("../database/data.js");
+const {
+  createTableIfNotExists,
+  seedProducts,
+  findAll,
+  addProduct,
+  updateProduct,
+  deleteProduct,
+} = require("./database/data.js");
 
 const app = express();
 
