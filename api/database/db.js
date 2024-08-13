@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const pool = mysql.createPool({
-  host: "localhost",
+  host: "sql.freedb.tech",
   port: 3306,
   user: "root",
   password: "root",
