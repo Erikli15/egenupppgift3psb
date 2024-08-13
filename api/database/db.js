@@ -5,9 +5,9 @@ dotenv.config();
 const pool = mysql.createPool({
   host: "sql.freedb.tech",
   port: 3306,
-  user: "root",
-  password: "root",
-  database: "databasegenuppgift3ps",
+  user: "freedb_database-user",
+  password: "6G9D7c73czC#3ym",
+  database: "freedb_databasegenuppgift3ps",
   connectionLimit: 10,
 });
 
