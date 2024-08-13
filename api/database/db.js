@@ -3,11 +3,11 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT),
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  host: "sql.freedb.tech",
+  port: 3306,
+  user: "sql.freedb.tech",
+  password: "6G9D7c73czC#3ym",
+  database: "freedb_databasegenuppgift3ps",
   connectionLimit: 10,
 });
 
@@ -20,3 +20,9 @@ pool.getConnection((err, connection) => {
   }
 });
 module.exports = { pool };
+
+// DB_USERNAME=freedb_database-user
+// DB_PASSWORD=6G9D7c73czC#3ym
+// DB_DATABASE=freedb_databasegenuppgift3ps
+// DB_HOST=sql.freedb.tech
+// DB_PORT=3306
