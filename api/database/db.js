@@ -3,11 +3,11 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const pool = mysql.createPool({
-  host: "sql.freedb.tech",
+  host: "localhost",
   port: 3306,
-  user: "sql.freedb.tech",
-  password: "6G9D7c73czC#3ym",
-  database: "freedb_databasegenuppgift3ps",
+  user: "root",
+  password: "root",
+  database: "databasegenuppgift3ps",
   connectionLimit: 10,
 });
 
