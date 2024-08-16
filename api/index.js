@@ -29,29 +29,29 @@ app.use(cors());
 dotenv.config();
 app.use(bodyParser.json());
 
-// const calculateOrderAmount = (items) => {
-//   if (items.length == 0) return 100 * 100;
-//   const totalAmount = items.reduce((acc, product) => acc + product.price, 0);
-//   return totalAmount * 100;
-// };
+const calculateOrderAmount = (items) => {
+  if (items.length == 0) return 100 * 100;
+  const totalAmount = items.reduce((acc, product) => acc + product.price, 0);
+  return totalAmount * 100;
+};
 
-// app.post("/create-payment-intent", async (req, res) => {
-//   const { items } = req.body;
+app.post("/create-payment-intent", async (req, res) => {
+  const { items } = req.body;
 
-//   // Create a PaymentIntent with the order amount and currency
-//   const paymentIntent = await stripe.paymentIntents.create({
-//     amount: calculateOrderAmount(items),
-//     currency: "sek",
-//     // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-//     automatic_payment_methods: {
-//       enabled: true,
-//     },
-//   });
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: calculateOrderAmount(items),
+    currency: "sek",
+    // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+    automatic_payment_methods: {
+      enabled: true,
+    },
+  });
 
-//   res.send({
-//     clientSecret: paymentIntent.client_secret,
-//   });
-// });
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+  });
+});
 
 app.get("/", async (req, res) => {
   let products = await findAll();
