@@ -22,7 +22,7 @@ async function findAll() {
   if (!connection) {
     throw new Error("Database connection not established");
   }
-  const [rows] = await (await connection).execute("SELECT * FROM products");
+  const [rows] = await (await connection).execute("SELECT * FROM Products");
   return rows.map(
     (row) =>
       new Product(
@@ -41,7 +41,7 @@ async function findByName(productName) {
   }
   const [rows] = await (
     await connection
-  ).execute("SELECT * FROM products WHERE productName = ?", [productName]);
+  ).execute("SELECT * FROM Products WHERE productName = ?", [productName]);
 
   // Skapa en ny instans av Product för varje produkt
   const products = rows.map((row) => {
@@ -710,7 +710,6 @@ async function create(productName, price, categoryName, description, imgUrl) {
     // Kontrollera om produkten redan finns i databasen
     const existingProducts = await findByName(productName);
     if (existingProducts.length > 0) {
-      console.log(`Produkten "${productName}" finns redan i databasen.`);
       return { error: "Produkten finns redan" };
     }
 
@@ -721,10 +720,8 @@ async function create(productName, price, categoryName, description, imgUrl) {
       "INSERT INTO Products(productName, price, categoryName, description, imgUrl) VALUES(?,?,?,?,?)",
       [productName, price, categoryName, description, imgUrl]
     );
-    console.log("Created product with ID: " + result.insertId);
     return { success: true, productId: result.insertId };
   } catch (error) {
-    console.error("Fel vid skapande av produkt:", error);
     return { error: "Fel vid skapande av produkt" };
   }
 }
@@ -749,7 +746,6 @@ async function addProduct(
       description,
       imgUrl === "" ? null : imgUrl,
     ];
-    console.log(`Executing query: ${query} with values: ${values}`);
     await (await connection).query(query, values);
   } catch (error) {
     console.error(`Error updating product: ${error.message}`);
@@ -787,7 +783,6 @@ async function updateProduct(
       "UPDATE Products SET productName = ?, price = ?, categoryName = ?, description = ?, imgUrl = ? WHERE id = ?";
     try {
       const [result] = await pool.execute(query, params);
-      console.log("Query executed successfully");
       return result;
     } catch (error) {
       console.error(`Error updating product: ${error.message}`);
@@ -803,9 +798,10 @@ async function deleteProduct(productId) {
   if (!connection) {
     throw new Error("Database connection not established");
   }
-  await (
+  let result = await (
     await connection
   ).query("DELETE FROM Products WHERE id=?", [productId]);
+  return result;
 }
 
 module.exports = {

@@ -23,9 +23,7 @@ const app = express();
 app.use(express.json());
 
 const port = 3000;
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+
 app.use(cors());
 
 dotenv.config();
@@ -55,7 +53,7 @@ app.use(bodyParser.json());
 //   });
 // });
 
-app.get("/products", async (req, res) => {
+app.get("/", async (req, res) => {
   let products = await findAll();
   res.json(products);
 });
@@ -154,7 +152,7 @@ app.delete("/:id", async (req, res) => {
   const productId = req.params.id;
   const result = await deleteProduct(productId);
   console.log(`Deleted product ${productId}: ${JSON.stringify(result)}`);
-  res.sendStatus(204);
+  res.json({});
 });
 
 app.listen(port, async () => {
